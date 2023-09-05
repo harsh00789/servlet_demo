@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class SaveServlet
+ * Servlet implementation class ViewServlet
  */
-@WebServlet("/SaveServlet")
-public class SaveServlet extends HttpServlet {
+@WebServlet("/ViewServlet")
+public class ViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SaveServlet() {
+    public ViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,39 +32,22 @@ public class SaveServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
+		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		EmpPojo e = new EmpPojo();
-		
-		String name = request.getParameter("uname");
-		String password = request.getParameter("pass");
-		String email = request.getParameter("email");
-		String country = request.getParameter("country");
+List<EmpPojo> employee = EmpDao.view();
 		
 		
+		out.print("<table style='border:1px solid black'>");
+		out.print("<tr><th>id</th><th>name</th><th>password</th><th>email</th><th>country</th><th>Edit</th><th>Delete</th></tr>");
 		
-		e.setName(name);
-		e.setPassword(password);
-		e.setEmail(email);
-		e.setCountry(country);
+		for(EmpPojo em : employee) {
 		
-		System.out.println(e);
+		out.print("<tr><td>"+em.getId()+"</td><td>"+em.getName()+"</td><td>"+em.getPassword()+"</td><td>"+em.getEmail()+"</td><td>"+em.getCountry()+"</td><td><br><form action='EditBridge'><input type='hidden' name='name' value="+em.getName()+"><input type='hidden' name='password' value="+em.getPassword()+"><input type='hidden' name='email' value="+em.getEmail()+"><input type='hidden' name='country' value="+em.getCountry()+"><input type='hidden' name='i' value="+em.getId()+"><input type='submit' value='edit'></form></td><td><br><form action='DeleteServlet' ><input type='hidden' name='id' value="+em.getId()+"><input type='submit' value='delete'></form></td></tr>");
 		
-		int status = EmpDao.save(e);
-		
-		if(status>0) {
-			out.print("<h3>Record , saved successfully</h3>");
-			RequestDispatcher rd = request.getRequestDispatcher("/crudformuser9.html");
-			rd.include(request, response);
-			
-		}else {
-			
-			out.print("<h2>sorry ! , unable to save record</h2>");
 		}
-		
-		
-		
+		out.print("</table>");
 		
 		
 	}

@@ -2,9 +2,7 @@ package com.CrudServlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class SaveServlet
+ * Servlet implementation class EditBridge
  */
-@WebServlet("/SaveServlet")
-public class SaveServlet extends HttpServlet {
+@WebServlet("/EditBridge")
+public class EditBridge extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SaveServlet() {
+    public EditBridge() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,42 +30,35 @@ public class SaveServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
 		EmpPojo e = new EmpPojo();
+		String i = request.getParameter("i");
+		int id = Integer.parseInt(i);
+	//	out.print(id);
 		
-		String name = request.getParameter("uname");
-		String password = request.getParameter("pass");
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String country = request.getParameter("country");
 		
-		
-		
-		e.setName(name);
-		e.setPassword(password);
-		e.setEmail(email);
-		e.setCountry(country);
-		
-		System.out.println(e);
-		
-		int status = EmpDao.save(e);
-		
-		if(status>0) {
-			out.print("<h3>Record , saved successfully</h3>");
-			RequestDispatcher rd = request.getRequestDispatcher("/crudformuser9.html");
-			rd.include(request, response);
-			
-		}else {
-			
-			out.print("<h2>sorry ! , unable to save record</h2>");
-		}
-		
-		
-		
-		
-		
+		out.print("<form action='EditServlet'><table>\r\n"
+				+ "	<tr><td><input type=\"hidden\" value="+id+" name=\"uid\"></td></tr>\r\n"
+				+ "	<tr><td>Name:</td><td><input type=\"text\" value="+name+"  name=\"uname\"></td></tr>\r\n"
+				+ "	<tr><td>Password:</td><td><input type=\"password\" value="+password+" name=\"pass\"></td></tr>\r\n"
+				+ "	<tr><td>Email:</td><td><input type=\"email\" value="+email+" name=\"email\"></td></tr>\r\n"
+				+ "	<tr><td>Country:</td><td>\r\n"
+				+ "		<select name=\"country\" value="+country+" style=\"width: 150px;\">\r\n"
+				+ "			<option>India</option>\r\n"
+				+ "			<option>America</option>\r\n"
+				+ "			<option>Canada</option>\r\n"
+				+ "			<option>Australia</option>\r\n"
+				+ "		</select>\r\n"
+				+ "		\r\n"
+				+ "	</td></tr>\r\n"
+				+ "	<tr><td><input type=\"submit\" value=\"save employee\"></td></tr>\r\n"
+				+ "</table></form>");
 	}
 
 	/**

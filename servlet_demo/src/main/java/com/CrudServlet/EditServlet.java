@@ -1,8 +1,9 @@
-package com.Filter;
+package com.CrudServlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,29 +11,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AuthenticationServlet
+ * Servlet implementation class EditServlet
  */
-@WebServlet("/AuthenticationServlet")
-public class AuthenticationServlet extends HttpServlet {
+@WebServlet("/EditServlet")
+public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AuthenticationServlet() {
+    public EditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String name = request.getParameter("nam");
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		out.print("WELCOME  "+name);
+	
+		
+		String i = request.getParameter("uid");
+		
+		String name = request.getParameter("uname");
+		String password = request.getParameter("pass");
+		String email = request.getParameter("email");
+		String country = request.getParameter("country");
+		
+		int id = Integer.parseInt(i);
+		
+		
+		EmpPojo e = new EmpPojo();
+		
+		e.setId(id);
+		e.setName(name);
+		e.setPassword(password);
+		e.setEmail(email);
+		e.setCountry(country);
+		
+		int status = EmpDao.edit(e);
+		
+		out.print("your details updated successfully ");
+		
+	
+	                                                                                                                                                                                                                                                                 
 		
 	}
 

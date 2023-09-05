@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Enter Edit data</h1>
+<form action="EditServlet">
+	
+<table>
+	<tr><td>Name:</td><td><input type="text" name="uname"></td></tr>
+	<tr><td>Password:</td><td><input type="password" name="pass"></td></tr>
+	<tr><td>Email:</td><td><input type="email" name="email"></td></tr>
+	<tr><td>Country:</td><td>
+		<select name="country" style="width: 150px;">
+			<option>India</option>
+			<option>America</option>
+			<option>Canada</option>
+			<option>Australia</option>
+		</select>
+		
+	</td></tr>
+	<tr><td><input type="submit" value="save employee"></td></tr>
+</table>
+
+<br><br>
+<a href="ViewServlet">view servlet</a>
+		
+</form>
+</body>
+</html>
